@@ -30,6 +30,17 @@ public class PersonDaoImpl implements PersonDao {
 				person.getGender());
 		
 	}
+	
+	@Override
+	public void add(List<Person> persons) {
+		// 1. for loop with sql
+		// 2. for loop call add(person)
+		// 3. jdbc template batch update(persons)
+		for	(Person person : persons){
+			this.add(person);
+		}
+		
+	}
 
 	@Override
 	public List<Person> find() {

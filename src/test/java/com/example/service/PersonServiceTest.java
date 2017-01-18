@@ -1,4 +1,4 @@
-package com.example.dao;
+package com.example.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,23 +12,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import com.example.service.PersonService;
 import com.example.domain.Person;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PersonDaoTest {
-
+public class PersonServiceTest {
     Random random = new Random();
 
     @Autowired
-    PersonDao personDao;
+    PersonService personService;
 
     @Test
     public void testCreate() {
         Person person = this.createRandomPerson();
-        personDao.add(person);
-        List<Person> persons = personDao.find();
+        personService.add(person);
+        List<Person> persons = personService.find();
         Assert.assertNotNull(persons);
         Assert.assertTrue(persons.size() > 0);
         boolean found = false;
@@ -43,16 +42,21 @@ public class PersonDaoTest {
     }
     
     @Test
-    public void testCreateMultiple() {
+    public void testCreateMultipleFail() {
         Person person = this.createRandomPerson();
         Person person2 = this.createRandomPerson();
+        person2.setGender("AB");
         List<Person> people = new ArrayList<>();
         people.add(person);
         people.add(person2);
-        personDao.add(people);
-        List<Person> persons = personDao.find();
+        try {
+        	personService.add(people);
+        	Assert.fail("Should not be able to add a person with gender field more than one character" + person);
+    	} catch(DataIntegrityViolationException e){
+    		Assert.assertTrue(true);
+    	}
+        List<Person> persons = personService.find();
         Assert.assertNotNull(persons);
-        Assert.assertTrue(persons.size() > 1);
         
         //System.out.println("\n!!!\n!!!\n!!!\n" + persons.size());
         
@@ -64,16 +68,7 @@ public class PersonDaoTest {
             }
         }
 
-        boolean found2 = false;
-        for (Person p : persons) {
-            if (p.equals(person2)) {
-                found2 = true;
-                break;
-            }
-        }
-
-        Assert.assertTrue("Could not find " + person, found);
-        Assert.assertTrue("Could not find second " + person2, found2);
+        Assert.assertTrue("Should not have found " + person, !found);
     }
     
     @Test
@@ -81,7 +76,7 @@ public class PersonDaoTest {
     	Person person = createRandomPerson();
     	person.setGender("AB");
     	try {
-        	personDao.add(person);
+        	personService.add(person);
         	Assert.fail("Should not be able to add a person with gender field more than one character" + person);
     	} catch(DataIntegrityViolationException e){
     		// all good
@@ -98,6 +93,4 @@ public class PersonDaoTest {
         person.setGender(random.nextBoolean() ? "F" : "M");
         return person;
     }
-
 }
-
