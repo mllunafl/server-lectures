@@ -1,11 +1,6 @@
 package com.example.service;
 
-import java.util.List;
+import com.example.common.PersonCrud;
 
-import com.example.domain.Person;
-
-public interface PersonService {
-	void add(Person person);
-    void add(List<Person> persons);
-    List<Person> find();
+public interface PersonService extends PersonCrud{
 }

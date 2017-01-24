@@ -1,12 +1,7 @@
 package com.example.dao;
 
-import java.util.List;
+import com.example.common.PersonCrud;
 
-import com.example.domain.Person;
-
-public interface PersonDao {
-    void add(Person person);
-    void add(List<Person> persons);
-    List<Person> find();
+public interface PersonDao extends PersonCrud {
 }
 
