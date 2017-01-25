@@ -7,17 +7,12 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.common.PersonCrudTest;
 import com.example.domain.Person;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class PersonServiceTest extends PersonCrudTest{
     Random random = new Random();
 
