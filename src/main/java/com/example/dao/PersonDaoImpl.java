@@ -65,4 +65,10 @@ public class PersonDaoImpl implements PersonDao {
 	
 	}
 
+	@Override
+	public Person find(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

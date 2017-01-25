@@ -31,5 +31,11 @@ public class PersonServiceImpl implements PersonService {
 	public List<Person> find() {
 		return personDao.find();
 	}
+
+	@Override
+	public Person find(int id) {
+		// TODO Auto-generated method stub
+		return personDao.find(id);
+	}
 	
 }
